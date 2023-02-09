@@ -5,6 +5,7 @@
          <a href="/#blogs" class="nav-link">Blogs</a>
 
          @auth
+         <img src="{{ auth()->user()->avatar }}" width="50" height="50" alt="" class="rounded-circle">
          <a href="" class="nav-link">Welcome{{ auth()->user()->name }}</a>
            <form action="/logout" method="POST">
             @csrf
