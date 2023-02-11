@@ -41,14 +41,19 @@ class BlogController extends Controller
     }
     public function store()
     {
+        // dd(request()->all());
+    //    $path = request()->file('thumbnail')->store('thumbnails');
+        // return $path;
         $formData=request()->validate([
             "title" => ["required"],
             "slug" => ["required",Rule::unique('blogs','slug')],
             "intro" => ["required"],
             "body" => ["required"],
-            "category_id" => ["required"]
+            "category_id" => ["required",Rule::exists('categories','id')]
         ]);
         $formData['user_id']=auth()->id();
+        $formData['thumbnail']=request()->file('thumbnail')->store('thumbnails');
+        // dd($formData['thumbnail']);
         Blog::create($formData);
         return redirect('/');
     }
