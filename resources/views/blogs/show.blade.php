@@ -14,13 +14,17 @@
             <div><a href="/categories/{{ $blog->category->slug }}"><span class="badge bg-primary">{{ $blog->category->name }}</span></a></div>
             <div class="text-secondary">{{ $blog->created_at->diffForHumans() }}</div>
             <div class="text-secondary">
-              <form action="" method="POST">
+              <form action="/blogs/{{ $blog->slug }}/subscription" method="POST">
                 {{-- @if (auth()->user()->subscribedBlogs && auth()->user()->subscribedBlogs->contains('id',$blog->id)) --}}
-                @if(auth()->user()->isSubscribed($blog))
+                @csrf
+                @auth
+                  @if(auth()->user()->isSubscribed($blog))
                 <button class="btn btn-danger">unsubscribe</button>
                 @else
                 <button class="btn btn-warning">subscribe</button>
                 @endif
+                @endauth
+                
               </form>
                 
             </div>
